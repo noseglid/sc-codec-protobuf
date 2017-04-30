@@ -1,0 +1,43 @@
+package socketcluster.builtins;
+syntax = "proto3";
+
+message HandshakeRequest {
+  string event = 1;
+
+  message Data {
+    string authToken = 1;
+  }
+
+  Data data = 2;
+  int32 cid = 3;
+}
+
+message HandshakeResponse {
+  int32 rid = 1;
+
+  message Data {
+    string id = 1;
+    bool isAuthenticated = 2;
+    int32 pingTimeout = 3;
+  }
+
+  Data data = 2;
+}
+
+message Ping {}
+message Pong {}
+
+message Disconnect {
+  string event = 1;
+  message Data {
+    int32 code = 1;
+    string data = 2;
+  }
+
+  Data data = 2;
+}
+
+message Generic {
+  string event = 1;
+  string data = 2; // JSON serialized
+}

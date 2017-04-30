@@ -1,0 +1,26 @@
+{
+  "name": "sc-codec-protobuf",
+  "version": "0.1.0",
+  "description": "SocketCluster codec using Google Protobufs",
+  "main": "index.js",
+  "repository": "git@github.com:noseglid/sc-codec-protobuf.git",
+  "author": "Alexander Olsson <noseglid@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "client:dev": "webpack-dev-server",
+    "server:dev": "supervisor server.js"
+  },
+  "dependencies": {
+    "debug": "^2.6.6",
+    "protobufjs": "^6.7.3"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "raw-loader": "^0.5.1",
+    "socketcluster-client": "^5.3.1",
+    "socketcluster-server": "^5.10.2",
+    "supervisor": "^0.12.0",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5"
+  }
+}
