@@ -1,5 +1,5 @@
 import socketCluster from 'socketcluster-client';
-import codec from './codec';
+import codec from '../codec';
 
 var socket = socketCluster.connect({
   port: 8000,

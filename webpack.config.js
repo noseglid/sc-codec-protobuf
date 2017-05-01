@@ -1,8 +1,14 @@
+const path = require('path');
+const BabiliPlugin = require("babili-webpack-plugin");
+
 module.exports = {
-  devtool: 'cheap-eval-source-map',
-  entry: './client.js',
+  entry: path.join(__dirname, 'codec.js'),
   output: {
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'sc-codec-protobuf.js',
+    library: 'sc-codec-protobuf',
+    libraryTarget: 'umd',
+    publicPath: '/dist/'
   },
   module: {
     rules: [
@@ -12,6 +18,9 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new BabiliPlugin()
+  ],
   node: {
     fs: 'empty'
   }

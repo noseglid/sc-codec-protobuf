@@ -1,3 +1,7 @@
+function isNode() {
+  return process && process.versions && process.versions.node;
+}
+
 module.exports = {
-  isNode: () => process && process.versions && process.versions.node
+  isNode
 };

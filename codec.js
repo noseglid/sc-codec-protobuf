@@ -5,7 +5,6 @@ const MessageTypes = require('./MessageTypes');
 const RequestResponseMapping = require('./RequestResponseMapping');
 const socketClusterEvents = require('./socketClusterEvents');
 
-
 module.exports = (...protobufs) => {
 
   const pbRoot = new Root();

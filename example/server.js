@@ -1,7 +1,7 @@
 const http = require('http');
 const debug = require('debug')('sc-codec-protobuf:server');
 const socketClusterServer = require('socketcluster-server');
-const codec = require('./codec');
+const codec = require('../codec');
 
 const port = 8000;
 
