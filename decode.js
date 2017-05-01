@@ -1,4 +1,4 @@
-const debug = require('debug')('socketcluster-api:codec');
+const debug = require('debug')('sc-codec-protobuf:decode');
 const { Reader } = require('protobufjs');
 const { createBuffer } = require('./buffer');
 
@@ -7,58 +7,37 @@ module.exports = (messageTypes, rrMapping) => (encoded) => {
   const reader = new Reader(localBuffer);
   const id = reader.bytes()[0];
 
-  debug('Decoding message of type: %o, (Buffer of size %o)', id, localBuffer.length);
+  debug('Decoding message type: %o, (Buffer size %o)', id, localBuffer.length);
 
   try {
-    let messageType = messageTypes.getById(id);
+    const messageType = messageTypes.getById(id);
     if (!messageType) {
       throw new Error(`Unable to map id ${id} to any message. Do you have the same codec on server and client?`);
     }
+    const message = messageType.request.id === id ? messageType.request : messageType.response;
 
-    const decoded = messageType.message.decodeDelimited(reader).toObject();
+    // Special special because they are literally strings in socketcluster protocol
+    if (message.type.fullName === '.socketcluster.builtins.Ping') {
+      debug('Decoded to ping');
+      return '#1';
+    }
+    if (message.type.fullName === '.socketcluster.builtins.Pong') {
+      debug('Decoded to pong');
+      return '#2';
+    }
+
+    let decoded = message.type.decode(reader).toObject();
+    if (message.transform.decode) {
+      decoded = message.transform.decode(decoded);
+    }
+
     debug('Decoded to: %o', decoded);
 
     if (undefined !== decoded.cid) {
-      rrMapping.set(decoded.cid, messageType.message.fullName.replace(/Request$/, 'Response'));
+      rrMapping.set(decoded.cid, messageType);
     }
-    return decoded;
 
-    // switch (type) {
-    //   case MESSAGE_TYPES.HANDSHAKE_REQUEST.type: {
-    //     message = MESSAGE_TYPES.HANDSHAKE_REQUEST.message.decodeDelimited(reader);
-    //     const decoded = message.toObject();
-    //     debug('Decoded: %o', decoded);
-    //     ridMapping[decoded.cid] = MESSAGE_TYPES.HANDSHAKE_RESPONSE;
-    //     return decoded;
-    //   }
-  // 
-  //     case MESSAGE_TYPES.HANDSHAKE_RESPONSE.type: {
-  //       message = MESSAGE_TYPES.HANDSHAKE_RESPONSE.message.decodeDelimited(reader);
-  //       break;
-  //     }
-  // 
-  //     case MESSAGE_TYPES.PING.type: {
-  //       return '#1';
-  //     }
-  // 
-  //     case MESSAGE_TYPES.PONG.type: {
-  //       return '#2';
-  //     }
-  // 
-  //     case MESSAGE_TYPES.DISCONNECT.type: {
-  //       message = MESSAGE_TYPES.DISCONNECT.message.decodeDelimited(reader);
-  //       break;
-  //     }
-  // 
-  //     default: {
-  //       debug('Unknown message type: %o -> %o', type, reader);
-  //       return null;
-  //     }
-  //   }
-  // 
-  //   const decoded = message.toObject();
-  //   debug('Decoded: %o', decoded);
-  //   return decoded;
+    return decoded;
 
   } catch(err) {
     debug(err);

@@ -27,6 +27,23 @@ message HandshakeResponse {
 message Ping {}
 message Pong {}
 
+
+message SubscribeRequest {
+  string event = 1;
+
+  message Data {
+    string channel = 1;
+    string data = 2; // Embedded data. JSON.stringified.
+  }
+
+  Data data = 2;
+  int32 cid = 3;
+}
+
+message SubscribeResponse {
+  int32 rid = 1;
+}
+
 message Disconnect {
   string event = 1;
   message Data {
@@ -37,7 +54,7 @@ message Disconnect {
   Data data = 2;
 }
 
-message Generic {
+message Unsubscribe {
   string event = 1;
-  string data = 2; // JSON serialized
+  string data = 2;
 }

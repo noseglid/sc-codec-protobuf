@@ -6,5 +6,4 @@ var socket = socketCluster.connect({
   codecEngine: codec()
 });
 
-setTimeout(() => socket.disconnect(), 1000);
-
+socket.on('stuff', () => {});

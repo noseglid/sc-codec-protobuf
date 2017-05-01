@@ -6,12 +6,10 @@ class RequestResponseMapping {
   }
 
   set(id, responseType) {
-    debug('setting %o to %o', id, responseType);
     this._mapping[id] = responseType;
   }
 
   get(id) {
-    debug(this._mapping);
     const responseType = this._mapping[id];
     if (!responseType) {
       return null;
