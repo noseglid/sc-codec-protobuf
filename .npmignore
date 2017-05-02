@@ -3,3 +3,5 @@
 /.eslintrc.yml
 /.gitignore
 /yarn.lock
+/webpack.config.js
+/example
