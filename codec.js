@@ -20,6 +20,7 @@ module.exports = (...protobufs) => {
 
   return {
     encode: require('./encode')(messageTypes, rrMapping),
-    decode: require('./decode')(messageTypes, rrMapping)
+    decode: require('./decode')(messageTypes, rrMapping),
+    messageTypes
   };
 };
