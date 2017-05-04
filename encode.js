@@ -4,7 +4,6 @@ const { createBuffer } = require('./buffer');
 
 module.exports = (messageTypes, rrMapping) => (plain) => {
   try {
-
     debug('Encoding %o', plain);
     let messageType = null;
     let message = null;

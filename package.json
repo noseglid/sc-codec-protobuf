@@ -10,6 +10,7 @@
     "client:dev": "webpack-dev-server --config example/webpack.config.js",
     "server:dev": "DEBUG=* supervisor example/server.js",
     "build": "NODE_ENV=production webpack",
+    "dev": "NODE_ENV=development webpack -w",
     "prepublish": "yarn build"
   },
   "dependencies": {

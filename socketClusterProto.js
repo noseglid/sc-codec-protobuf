@@ -2,7 +2,8 @@ const { isNode } = require('./detect');
 
 module.exports = () => {
   if (isNode()) {
-    return require('fs').readFileSync('./socketCluster.proto', 'utf8');
+    const path = require('path');
+    return require('fs').readFileSync(path.join(__dirname, 'socketCluster.proto'), 'utf8');
   } else {
     return require('./socketCluster.proto');
   }

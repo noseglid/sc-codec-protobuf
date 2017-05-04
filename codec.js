@@ -6,10 +6,8 @@ const RequestResponseMapping = require('./RequestResponseMapping');
 const socketClusterEvents = require('./socketClusterEvents');
 
 module.exports = (...protobufs) => {
-
   const pbRoot = new Root();
-  protobufs.unshift(socketClusterProto());
-  protobufs.forEach(source => parse(source, pbRoot));
+  [ ...protobufs, socketClusterProto() ].forEach(protobuf => parse(protobuf, pbRoot));
 
   const rrMapping = new RequestResponseMapping();
   const messageTypes = new MessageTypes(pbRoot);
@@ -21,6 +19,7 @@ module.exports = (...protobufs) => {
   return {
     encode: require('./encode')(messageTypes, rrMapping),
     decode: require('./decode')(messageTypes, rrMapping),
-    messageTypes
+    messageTypes,
+    pbRoot
   };
 };
