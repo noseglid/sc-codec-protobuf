@@ -1,6 +1,6 @@
 {
   "name": "sc-codec-protobuf",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "SocketCluster codec using Google Protobufs",
   "main": "dist/sc-codec-protobuf.js",
   "repository": "git@github.com:noseglid/sc-codec-protobuf.git",
